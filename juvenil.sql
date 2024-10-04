@@ -55,14 +55,103 @@ CREATE OR ALTER PROCEDURE listadoAlumnos (@nombre varchar(20)) AS
 BEGIN
 	DECLARE @alumno VARCHAR(30),
 	@nota int,
-	@suspensos int,
-	@aprobados int,
-	@notables int,
-	@sobresalientes int
+	@suspensos int = 0,
+	@aprobados int = 0,
+	@notables int = 0,
+	@sobresalientes int = 0,
+	@notaMin int = 0,
+	@notaMax int = 0
 
-	DECLARE mycursor CURSOR FOR
-	SELECT 
+	DECLARE cAlumnos CURSOR FOR
+    SELECT APENOM, NOTA FROM NOTAS AS N
+    JOIN ASIGNATURAS AS AG
+    ON N.COD = AG.COD
+    JOIN ALUMNOS AS AL
+    ON AL.DNI = N.DNI
+    WHERE NOMBRE = @nombre
+    GROUP BY APENOM, NOTA
 
+    OPEN cAlumnos
+    FETCH cAlumnos INTO @alumno, @nota
+
+    WHILE(@@FETCH_STATUS = 0)
+    BEGIN
+        
+        IF (@nota >= 5)
+        BEGIN
+            SET @aprobados += 1
+            IF(@nota >= 8)
+            BEGIN
+                SET @sobresalientes += 1
+            END
+            ELSE IF (@nota >=7)
+            BEGIN
+                SET @notables += 1
+            END
+        END
+        ELSE 
+        BEGIN
+            SET @suspensos += 1
+        END
+
+        IF(@nota < @notaMin)
+        BEGIN
+            SET @notaMin = @nota
+        END
+        IF(@nota > @notaMax)
+        BEGIN
+            SET @notaMax = @nota
+        END
+
+        PRINT CONCAT (@alumno, ' -> ', @nota)
+        
+        FETCH cAlumnos INTO @alumno, @nota
+    END
+
+        PRINT CONCAT ('Suspensos: ', @suspensos)
+        PRINT CONCAT ('Aprobados: ', @aprobados)
+        PRINT CONCAT ('Notables: ', @notables)
+        PRINT CONCAT ('Sobresaliente: ', @sobresalientes)
+        PRINT CONCAT ('Máxima: ', @notaMax)
+        PRINT CONCAT ('Mínima: ', @notaMin)
+
+    CLOSE cAlumnos
+    DEALLOCATE cAlumnos
 END
 
-EXEC listadoAlumnos
+EXECUTE listadoAlumnos @nombre = 'Entornos Gráficos'
+
+-- EJ3.0
+
+CREATE PROCEDURE UPDStock  AS
+BEGIN
+
+	DECLARE @codProducto int,
+	@ventas
+
+
+	DECLARE cAlumnos CURSOR FOR
+    SELECT APENOM, NOTA FROM NOTAS AS N
+    JOIN ASIGNATURAS AS AG
+    ON N.COD = AG.COD
+    JOIN ALUMNOS AS AL
+    ON AL.DNI = N.DNI
+    WHERE NOMBRE = @nombre
+    GROUP BY APENOM, NOTA
+
+    OPEN cAlumnos
+    FETCH cAlumnos INTO @alumno, @nota
+
+	UPDATE Stock
+END
+
+-- EJ3.1
+
+
+-- EJ3.2
+
+
+
+
+SELECT * FROM Productos
+SELECT * FROM Ventas
