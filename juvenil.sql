@@ -127,17 +127,12 @@ CREATE PROCEDURE UPDStock  AS
 BEGIN
 
 	DECLARE @codProducto int,
-	@ventas
+	@ventas int,
+	@stock int
 
 
-	DECLARE cAlumnos CURSOR FOR
-    SELECT APENOM, NOTA FROM NOTAS AS N
-    JOIN ASIGNATURAS AS AG
-    ON N.COD = AG.COD
-    JOIN ALUMNOS AS AL
-    ON AL.DNI = N.DNI
-    WHERE NOMBRE = @nombre
-    GROUP BY APENOM, NOTA
+	DECLARE cProduct CURSOR FOR
+    SELECT CodProductos, Stock FROM Productos AS P
 
     OPEN cAlumnos
     FETCH cAlumnos INTO @alumno, @nota
