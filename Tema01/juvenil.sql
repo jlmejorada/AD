@@ -121,32 +121,109 @@ END
 
 EXECUTE listadoAlumnos @nombre = 'Entornos Gráficos'
 
--- EJ3.0
+-- EJ3.A1
 
-CREATE PROCEDURE UPDStock  AS
+CREATE OR ALTER PROCEDURE UPDStock  AS
 BEGIN
 
 	DECLARE @codProducto int,
-	@ventas int,
-	@stock int
-
+	@codVenta VARCHAR(5)
 
 	DECLARE cProduct CURSOR FOR
-    SELECT CodProductos, Stock FROM Productos AS P
+    SELECT CodProducto, CodVenta FROM Ventas
 
-    OPEN cAlumnos
-    FETCH cAlumnos INTO @alumno, @nota
+    OPEN cProduct
+    FETCH cProduct INTO @codProducto, @codVenta
 
-	UPDATE Stock
+	WHILE(@@FETCH_STATUS = 0)
+    BEGIN
+		IF ((SELECT Stock FROM Productos WHERE CodProducto=@codProducto) > (SELECT ISNULL(UnidadesVendidas,0)FROM Ventas WHERE CodVenta=@codVenta))
+		BEGIN
+			UPDATE Productos 
+			SET Stock = Stock - (SELECT ISNULL(UnidadesVendidas,0)FROM Ventas WHERE CodVenta=@codVenta)
+			WHERE CodProducto = @codProducto
+		END
+		FETCH cProduct INTO @codProducto, @codVenta
+	END
+	CLOSE cProduct
+	DEALLOCATE cProduct
 END
 
--- EJ3.1
+BEGIN TRANSACTION
+EXECUTE UPDStock
+ROLLBACK
 
 
--- EJ3.2
+-- EJ3.A2
+-- Trigger 1
+CREATE OR ALTER TRIGGER ActualizaStockVenta
+ON Ventas
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE productos
+    SET Stock = stock - (I.UnidadesVendidas - D.UnidadesVendidas)
+    FROM productos AS P
+    JOIN Inserted AS I ON P.CodProducto = I.CodProducto
+    JOIN Deleted AS D ON P.CodProducto = D.CodProducto
+
+    DELETE FROM Ventas
+    WHERE CodVenta IN (
+        SELECT I.CodVenta
+        FROM Inserted AS I
+        JOIN Deleted AS D ON I.CodVenta = D.CodVenta
+        WHERE I.UnidadesVendidas = 0
+    )
+    
+END
 
 
+-- EJ3.B
+CREATE OR ALTER PROCEDURE DatosProdc  AS
+BEGIN
 
+	DECLARE @lineaProducto VARCHAR(10),
+	@codProducto INT,
+	@ventasTotales INT,
+	@ventas INT,
+	@importeTotal MONEY,
+	@precio MONEY
 
-SELECT * FROM Productos
-SELECT * FROM Ventas
+	DECLARE producto CURSOR FOR
+    SELECT LineaProducto FROM Productos
+	GROUP BY LineaProducto
+
+    OPEN producto
+    FETCH producto INTO @lineaProducto
+
+	WHILE(@@FETCH_STATUS = 0)
+    BEGIN
+		PRINT CONCAT('Linea Producto: ', @lineaProducto)
+
+		DECLARE venta CURSOR FOR
+		SELECT CodProducto FROM Productos
+		WHERE LineaProducto = @lineaProducto
+
+		OPEN venta
+		FETCH venta INTO @codProducto
+
+		WHILE(@@FETCH_STATUS = 0)
+		BEGIN
+			SET @ventasTotales = (SELECT ISNULL(SUM(UnidadesVendidas),0) FROM Ventas WHERE CodProducto=@codProducto)
+			SET @precio = (SELECT PrecioUnitario FROM Productos WHERE CodProducto=@codProducto)
+			SET @importeTotal = (@precio*@ventasTotales)
+			PRINT CONCAT('     ', @codProducto,'     ' , @ventasTotales ,  '     ', @importeTotal)
+			FETCH venta INTO @codProducto
+		END
+
+		CLOSE venta
+		DEALLOCATE venta
+
+		PRINT ('---------------------------------------------------')
+		FETCH producto INTO @lineaProducto
+	END
+	CLOSE producto
+	DEALLOCATE producto
+END
+
+EXECUTE DatosProdc
