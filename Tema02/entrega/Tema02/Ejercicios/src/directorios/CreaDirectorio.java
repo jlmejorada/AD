@@ -9,8 +9,8 @@ import java.io.IOException;
 public class CreaDirectorio {
 
 	public static void main(String[] args) {
-
-		String directorio = "C:\\Users\\jlmejorada\\";
+		String username = System.getProperty("user.name");
+		String directorio = "C:\\Users\\" + username + "\\";
 
 		leeDocumento(directorio);
 
