@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
 
-public class Parte02 {
+public class Parte03 {
 
+	//Este ejercicio no funciona
+	
 	public static void main(String[] args) {
 		String rutaLeer = "src/archivo/abcde.txt";
 		String rutaEscribir = "src/archivo/edcba.txt";
@@ -23,8 +26,8 @@ public class Parte02 {
 			while(file.getFilePointer() != file.length()) {
 	              file.seek(posIni);
 	              aux = file.readByte();
-	              letra = (char)aux;
-	              letras += letra;
+	              //letras += ;
+	              
 	              posIni++;
 	          }
 	          
