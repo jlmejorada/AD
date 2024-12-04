@@ -7,6 +7,7 @@ public class Main {
 
     static Connection conn = null;
 
+    //Main que llama al menú y a las clases
     public static void main(String[] args) throws SQLException {
         int opc=0;
         Scanner sc = new Scanner(System.in);
@@ -60,6 +61,7 @@ public class Main {
         System.out.println("Saliendo...");
     }
 
+    // Conectar
     public static void conectar(){
         String url = "jdbc:mysql://dns11036.phdns11.es:3306/ad2425_jlmejorada";
         String usuario = "jlmejorada";
@@ -72,6 +74,7 @@ public class Main {
         System.out.println(conn);
     }
 
+    // Listado ordenado por edad.
     public static void listadoEdad() throws SQLException {
         PreparedStatement listaEdad = conn.prepareStatement("SELECT * FROM Persona ORDER BY edad");
         ResultSet lista=listaEdad.executeQuery();
@@ -87,6 +90,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de nombres y apellidos de más de 30 años
     public static void listadoApellidos() throws SQLException {
         PreparedStatement listaApellido = conn.prepareStatement("SELECT * FROM Persona ORDER BY apellido");
         ResultSet lista=listaApellido.executeQuery();
@@ -102,6 +106,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de nombres y apellidos de más de 30 años
     public static void listadoMas30() throws SQLException {
         PreparedStatement listaMas30 = conn.prepareStatement("SELECT * FROM Persona WHERE edad >= 30");
         ResultSet lista=listaMas30.executeQuery();
@@ -117,6 +122,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de los nombres que comiencen por "J" ordenados por apellido .
     public static void listadoApellidoPorJ() throws SQLException {
         PreparedStatement listaApellidoPorJ = conn.prepareStatement("SELECT * FROM Persona WHERE nombre LIKE 'J%' ORDER BY apellido");
         ResultSet lista=listaApellidoPorJ.executeQuery();
@@ -132,6 +138,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de los nombres que comiencen por "C" y los apellidos por "A" ordenados por edad de mayor a menor.
     public static void listadoNombrePorCApellidoPorAYEdad() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT * FROM Persona WHERE nombre LIKE 'C%' AND apellido LIKE 'A%' ORDER BY edad");
         ResultSet lista=listita.executeQuery();
@@ -147,6 +154,7 @@ public class Main {
         lista.close();
     }
 
+    // Media de edad de la muestra.
     public static void listadoMediaEdad() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT AVG(edad) as 'Media' FROM Persona");
         ResultSet lista=listita.executeQuery();
@@ -158,6 +166,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de los apellidos que contengan las letras "oh" o las letras "ma" (si el resultado fuera nulo, cambiar las letras)
     public static void listadodeApellidosConLetrasWaOMa() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT * FROM Persona WHERE apellido LIKE '%wa%' OR apellido LIKE '%ma%'");
         ResultSet lista=listita.executeQuery();
@@ -173,6 +182,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de las personas en la franja de edad comprendida entre los 24 y los 32 años.
     public static void listadoEntre24Y32() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT * FROM Persona WHERE edad >= 24 AND edad <= 32");
         ResultSet lista=listita.executeQuery();
@@ -188,6 +198,7 @@ public class Main {
         lista.close();
     }
 
+    // Listado de las personas mayores de 65 años.
     public static void listadoMas65() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT * FROM Persona WHERE edad > 65");
         ResultSet lista=listita.executeQuery();
@@ -203,6 +214,12 @@ public class Main {
         lista.close();
     }
 
+    // Crea una columna denominada "laboral" que contendrá los siguientes valores: estudiante, ocupado, parado, jubilado.
+    // Actualiza la columna laboral con el siguiente criterio:
+    // Los menores de 18 son estudiantes
+    // Los mayores de 65 son jubilados
+    // Los de edad impar, que no pertenezcan a los colectivos anteriores, están parados
+    // El resto, ocupados
     public static void creacionYActualizacion() throws SQLException {
         ResultSet lista = null;
         PreparedStatement listaEdad = null;
@@ -210,7 +227,7 @@ public class Main {
         PreparedStatement alterarTabla = null;
 
         try {
-            String alterTableQuery = "ALTER TABLE Persona ADD COLUMN laboral VARCHAR(20)";
+            String alterTableQuery = "ALTER TABLE Persona ADD CONSTRAINT laboralEstricto CHECK (laboral IN ('estudiante', 'ocupado', 'jubilado', 'parado'))";
             alterarTabla = conn.prepareStatement(alterTableQuery);
 
             alterarTabla.executeUpdate();
@@ -227,12 +244,14 @@ public class Main {
                 int edad = lista.getInt("edad");
                 String laboral = "";
 
-                if (edad < 25) {
+                if (edad < 18) {
                     laboral = "estudiante";
-                } else if (edad >= 25 && edad <= 60) {
-                    laboral = "ocupado";
-                } else if (edad > 60) {
+                } else if (edad <= 65) {
                     laboral = "jubilado";
+                } else if (edad % 2 != 0) {
+                    laboral = "parado";
+                } else {
+                    laboral = "ocupado";
                 }
 
                 actualizar.setString(1, laboral);
@@ -256,6 +275,7 @@ public class Main {
         }
     }
 
+    // Listado total
     public static void listadoTotal() throws SQLException {
         PreparedStatement listita = conn.prepareStatement("SELECT * FROM Persona");
         ResultSet lista=listita.executeQuery();
