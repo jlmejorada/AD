@@ -1,3 +1,7 @@
+package BDD;
+
+import Main.Main;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -55,11 +59,11 @@ public class CreaciónTablas {
         boolean seCrea = false;
         PreparedStatement creaTabla=null;
         try {
-            creaTabla = Main.conn.prepareStatement("CREATE TABLE Matricula (" +
+            creaTabla = Main.conn.prepareStatement("CREATE TABLE Matriculas (" +
                     "    idMatricula INT PRIMARY KEY, " +
                     "    idProfesor INT NOT NULL, " +
                     "    idAlumnado INT NOT NULL, " +
-                    "    Aisgnatura VARCHAR(45) NOT NULL, " +
+                    "    Asignatura VARCHAR(45) NOT NULL, " +
                     "    Curso INT NOT NULL, " +
                     "    FOREIGN KEY (idProfesor) REFERENCES Profesores(idProfesor), " +
                     "    FOREIGN KEY (idAlumnado) REFERENCES Alumnado(idAlumnado))");
