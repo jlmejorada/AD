@@ -5,9 +5,8 @@ import java.util.Scanner;
 
 public class Listar {
 
-    static Scanner sc = new Scanner(System.in);
-
-    public static void listaTablas(Connection conn) {
+    //Menu para ver que listar
+    public static void listaTablas(Connection conn, Scanner sc) {
         String res = "";
         int opc = 0;
         menuLista();
@@ -16,13 +15,13 @@ public class Listar {
         while (opc != 0) {
             switch (opc) {
                 case 1 -> {
-                    listaTablaProfesores(conn);
+                    listaTablaProfesores(conn, sc);
                 }
                 case 2 -> {
-                    listaTablaAlumnado(conn);
+                    listaTablaAlumnado(conn, sc);
                 }
                 case 3 -> {
-                    listaTablaMatriculas(conn);
+                    listaTablaMatriculas(conn, sc);
                 }
                 default -> {
                     System.out.println("Opción no valida");
@@ -35,7 +34,8 @@ public class Listar {
         }
     }
 
-    public static void listaTablaProfesores(Connection conn){
+    //Menu para ver que quieres listar dentro de profesores
+    public static void listaTablaProfesores(Connection conn, Scanner sc){
         String res = "";
         int opc = 0;
         int num = 0;
@@ -87,7 +87,8 @@ public class Listar {
         }
     }
 
-    public static void listaTablaAlumnado(Connection conn){
+    //Menu para ver que quieres listar dentro de alumnos
+    public static void listaTablaAlumnado(Connection conn, Scanner sc){
         String res = "";
         int opc = 0;
         int num = 0;
@@ -133,7 +134,8 @@ public class Listar {
         }
     }
 
-    public static void listaTablaMatriculas(Connection conn){
+    //Menu para ver que quieres listar dentro de matriculas
+    public static void listaTablaMatriculas(Connection conn, Scanner sc){
         String res = "";
         int opc = 0;
         int num = 0;

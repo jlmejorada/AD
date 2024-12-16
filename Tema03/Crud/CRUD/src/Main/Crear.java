@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Crear {
 
-    public static void crearTablas(Connection conn){
+    //Menu que se mueve por la creacion de las tablas
+    public static void crearTablas(Connection conn, Scanner sc){
         String res = "";
         int opc = 0;
-        Scanner sc = new Scanner(System.in);
         menuTablas();
         System.out.println("Elige una opcion");
         opc = sc.nextInt();

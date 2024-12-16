@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 public class ConsultasMatriculas {
 
+
+    //Lista todas las matriculas
     public static void listadoMatriculas(Connection conn) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -15,8 +17,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");
@@ -32,6 +34,7 @@ public class ConsultasMatriculas {
         }
     }
 
+    //Lista las matriculas por id
     public static void listadoMatriculasPorID(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -41,8 +44,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");
@@ -58,6 +61,7 @@ public class ConsultasMatriculas {
         }
     }
 
+    //Lista las matriculas por idProfesor
     public static void listadoMatriculasPorIDProfesor(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -67,8 +71,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");
@@ -84,6 +88,7 @@ public class ConsultasMatriculas {
         }
     }
 
+    //Lista las matriculas por idAlumno
     public static void listadoMatriculasPorIDAlumno(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -93,8 +98,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");
@@ -110,6 +115,7 @@ public class ConsultasMatriculas {
         }
     }
 
+    //Lista las matriculas por asignaturas
     public static void listadoMatriculasPorAsignatura(Connection conn, String compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -119,8 +125,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");
@@ -136,6 +142,7 @@ public class ConsultasMatriculas {
         }
     }
 
+    //Lista las matriculas por curso
     public static void listadoMatriculasPorCurso(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -145,8 +152,8 @@ public class ConsultasMatriculas {
             lista = listaCompleta.executeQuery();
             while (lista.next()) {
                 System.out.println("ID: " + lista.getInt("idMatricula"));
-                System.out.println("ID Alumno: " + lista.getInt("idProfesor"));
-                System.out.println("ID Profesor: " + lista.getInt("idAlumnado"));
+                System.out.println("ID Profesor: " + lista.getInt("idProfesor"));
+                System.out.println("ID Alumno: " + lista.getInt("idAlumnado"));
                 System.out.println("Asignatura: " + lista.getString("Asignatura"));
                 System.out.println("Curso: " + lista.getInt("Curso"));
                 System.out.println("-----------------------------------------------");

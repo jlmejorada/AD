@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class ConsultasProfesor {
 
+    //Lista todos los profesores
     public static void listadoProfesores(Connection conn) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -32,6 +33,7 @@ public class ConsultasProfesor {
         }
     }
 
+    //Lista las profesores por id
     public static void listadoProfesoresPorId(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -58,6 +60,7 @@ public class ConsultasProfesor {
         }
     }
 
+    //Lista las profesores por id
     public static void listadoProfesoresPorNombre(Connection conn, String compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -84,6 +87,7 @@ public class ConsultasProfesor {
         }
     }
 
+    //Lista las profesores por apellidos
     public static void listadoProfesoresPorApellidos(Connection conn, String compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -110,6 +114,8 @@ public class ConsultasProfesor {
         }
     }
 
+
+    //Lista las profesores por fecha
     public static void listadoProfesoresPorFecha(Connection conn, String compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;
@@ -136,6 +142,8 @@ public class ConsultasProfesor {
         }
     }
 
+
+    //Lista las profesores por antiguedad
     public static void listadoProfesoresPorAntiguedad(Connection conn, int compara) {
         ResultSet lista = null;
         PreparedStatement listaCompleta = null;

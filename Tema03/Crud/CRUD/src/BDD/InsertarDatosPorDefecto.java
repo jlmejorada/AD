@@ -10,6 +10,7 @@ import java.sql.Statement;
 
 public class InsertarDatosPorDefecto {
 
+    //Inserta por defecto profesores
     public static void insertaInicialTablaProfesores(Connection conn) {
         BufferedReader br = null;
         String linea =  "";
@@ -42,6 +43,7 @@ public class InsertarDatosPorDefecto {
         }
     }
 
+    //Inserta por defecto profesores
     public static void insertaInicialTablaAlumnado(Connection conn) {
         BufferedReader br = null;
         String linea =  "";
@@ -74,6 +76,7 @@ public class InsertarDatosPorDefecto {
         }
     }
 
+    //Inserta por defecto matriculas
     public static void insertaInicialTablaMatricula(Connection conn) {
         BufferedReader br = null;
         String linea =  "";

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-    // Conectar
+    // Conectar con la bdd
     public static Connection conectar() {
         String url = "jdbc:mysql://dns11036.phdns11.es:3306/ad2425_jlmejorada";
         String usuario = "jlmejorada";

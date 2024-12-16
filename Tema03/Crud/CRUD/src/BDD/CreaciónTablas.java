@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class CreaciónTablas {
 
+    //Crea la tabla profesor
     public static boolean creaTablaProfesor() {
         boolean seCrea = false;
         PreparedStatement creaTabla = null;
@@ -32,6 +33,7 @@ public class CreaciónTablas {
         return seCrea;
     }
 
+    //Crea la tabla alumno
     public static boolean creaTablaAlumnado() {
         boolean seCrea = false;
         PreparedStatement creaTabla = null;
@@ -55,6 +57,7 @@ public class CreaciónTablas {
         return seCrea;
     }
 
+    //Crea la tabla matricula
     public static boolean creaTablaMatricula() {
         boolean seCrea = false;
         PreparedStatement creaTabla=null;
